@@ -29,10 +29,10 @@ public class FaxOperations {
         if(ACCESS_TOKEN != null){
         	
         	String aouthRequestHeaderValue = ACCESS_TOKEN;
-        	String senderName = "JAVAConsoleFax";
-			String senderCompanyName = "JAVAGroup Org";
-			String faxSubject = "Send Fax Simple Model with JAVA Console";
-			String faxNotes = "Send Fax Simple Model with JAVA Console";
+        	String senderName = "Japano JAVAConsoleFax";
+			String senderCompanyName = "Japan JAVAGroup Org";
+			String faxSubject = "Japaneze Send Fax Simple Model with JAVA Console";
+			String faxNotes = "Japaneze Send Fax Simple Model with JAVA Console";
 
 			String recipientName = "OFX";
 			String faxNumber = "1(720)4039716";
@@ -73,8 +73,8 @@ public class FaxOperations {
 	public void SendFaxComplexModel() throws UnsupportedEncodingException{
 		String charset = "UTF-8";
 		
-        File uploadFile1 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//SampleFaxDoc.pdf");
-        File uploadFile2 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//TestFaxFromJapan.txt");
+        File uploadFile1 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//SampleFaxDoc.docx");
+        File uploadFile2 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//TestFaxFromBulgaria.txt");
         
         AccessToken accessToken = new AccessToken();
         String getTokenUrl = "https://api.onlinefaxes.com/v2/oauth2/token";
@@ -94,10 +94,10 @@ public class FaxOperations {
         	SenderDetail senderDtl = new SenderDetail();
         	
         	senderDtl.Id = 0;
-        	senderDtl.Name = "JAVAConsoleFax";
-        	senderDtl.Company = "JAVAGroup Org";
-        	senderDtl.Subject = "Send Fax Complex Model with JAVA Console";
-        	senderDtl.Notes = "Send Fax Complex Model with JAVA Console";
+        	senderDtl.Name = "Bulgaria JAVAConsoleFax";
+        	senderDtl.Company = "Bulgaria JAVAGroup Org";
+        	senderDtl.Subject = "Bulgaria Fax Complex Model with JAVA Console";
+        	senderDtl.Notes = "Bulgaria Fax Complex Model with JAVA Console";
         	
         	       	
         	RecipientDetail recDtl_1 = new RecipientDetail();
