@@ -8,7 +8,7 @@ public class Program {
 		FaxOperations faxSimpleModel = new FaxOperations();
 		FaxOperations faxCompleModel = new FaxOperations();
 
-		System.out.println("Sending Fax Simple Model ...");
+		/*System.out.println("Sending Fax Simple Model ...");
 		try {
 			faxSimpleModel.SendFaxSimpleModel();
 		} catch (UnsupportedEncodingException e) {
@@ -23,7 +23,7 @@ public class Program {
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		System.out.println("Getting Fax Status using faxId of 208121774837 ...");
 		faxCompleModel.GetFaxStatus();
@@ -35,7 +35,7 @@ public class Program {
 		faxCompleModel.DownloadFax();
 		
 		System.out.println("Delete Fax for faxId of 208121513082 ...");
-		faxCompleModel.DownloadFax();
+		faxCompleModel.DeleteFax();
 		
 		
 	}

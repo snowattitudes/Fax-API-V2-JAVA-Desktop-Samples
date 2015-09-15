@@ -16,9 +16,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.json.Json;
+import javax.json.*;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 import com.google.gson.*;
 
@@ -167,170 +166,209 @@ public class FaxOperations {
         }
 	}
 	
+	
 	public void GetFaxStatus(){
-			
+		
+		String oauthHeader;
 		String FAX_ID = "208121774837";
-		String urlParameters  = "faxId=" + FAX_ID;
+		String urlParameters  = FAX_ID;
 		byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
 		int    postDataLength = postData.length;
-		String baseUrl        = "https://api.onlinefaxxes.com/v2";
-		String faxUrl 		  = baseUrl + "/fax/async/getfaxstatus?" + urlParameters;
-		URL url = null;
-		try {
-			url = new URL( faxUrl );
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		HttpURLConnection conn;
-		try {
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setDoOutput( true );
-			conn.setInstanceFollowRedirects( false );
-			conn.setRequestMethod( "POST" );
-			conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
-			conn.setRequestProperty( "charset", "utf-8");
-			conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-			conn.setUseCaches( false );
-			DataOutputStream wr = new DataOutputStream( conn.getOutputStream()); 
+		String baseUrl        = "https://api.onlinefaxes.com/v2";
+		String faxUrl 		  = baseUrl + "/fax/async/getfaxstatus?faxId=" + urlParameters;
 		
-			wr.write( postData );
-			wr.close();
-			//Get Response  
-			InputStream is = conn.getInputStream();
-			JsonReader rdr = Json.createReader(is);
-			JsonObject obj = rdr.readObject();
-			String response = obj.getString("Status");
-			System.out.println("Status:" + response);
-		}catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		AccessToken accessToken = new AccessToken();
+        String getTokenUrl = "https://api.onlinefaxes.com/v2/oauth2/token";
+        String ACCESS_TOKEN = null;
+        try {
+			ACCESS_TOKEN = accessToken.GetAccessToken(getTokenUrl);
+			System.out.println("SERVER ACCESS_TOKEN: " + ACCESS_TOKEN);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+        if(ACCESS_TOKEN !=null){
+        	
+        	oauthHeader = ACCESS_TOKEN;
+        	URL url = null;
+    		HttpURLConnection conn;
+    		try {
+    			
+    			url = new URL( faxUrl );
+    			conn = (HttpURLConnection) url.openConnection();
+    			conn.setDoOutput( true );
+    			conn.setInstanceFollowRedirects( false );
+    			conn.setRequestMethod( "POST" );
+    			conn.setRequestProperty("Authorization", "ofx " + oauthHeader);
+    			conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+    			conn.setRequestProperty( "charset", "utf-8");
+    			conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+    			conn.setUseCaches( false );
+    			DataOutputStream wr = new DataOutputStream( conn.getOutputStream()); 
+    		
+    			wr.write( postData );
+    			wr.close();
+    			//Get Response  
+    			InputStream is = conn.getInputStream();
+    			System.out.println("Input Stream:" + is.toString());
+    			JsonReader rdr = Json.createReader(is);
+    			JsonObject obj = rdr.readObject();
+    			String response = obj.getString("Status");
+    			System.out.println("Status:" + response);
+    		}catch (MalformedURLException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		} catch (ProtocolException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        } else {
+        	System.out.println("Error Getting Access Token");
+        }
+		
+		
 	}
 	
 	public void GetFaxDetail(){
 		
+		String oauthHeader;
 		String FAX_ID = "208121774837";
-		String urlParameters  = "faxId=" + FAX_ID;
+		String urlParameters  = FAX_ID;
 		byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
 		int    postDataLength = postData.length;
-		String baseUrl        = "https://api.onlinefaxxes.com/v2";
-		String faxUrl 		  = baseUrl + "/fax/async/getfaxdetail?" + urlParameters;
-		URL url = null;
-		try {
-			url = new URL( faxUrl );
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		HttpURLConnection conn;
-		try {
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setDoOutput( true );
-			conn.setInstanceFollowRedirects( false );
-			conn.setRequestMethod( "POST" );
-			conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
-			conn.setRequestProperty( "charset", "utf-8");
-			conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-			conn.setUseCaches( false );
-			DataOutputStream wr = new DataOutputStream( conn.getOutputStream()); 
+		String baseUrl        = "https://api.onlinefaxes.com/v2";
+		String faxUrl 		  = baseUrl + "/fax/async/getfaxdetail?faxId=" + urlParameters;
 		
-			wr.write( postData );
-			wr.close();
-			//Get Response  
-			InputStream is = conn.getInputStream();
-			JsonReader rdr = Json.createReader(is);
-			JsonObject obj = rdr.readObject();
-			String response = obj.getString("MessageDetails");
-			System.out.println("Status:" + response);
-		}catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		AccessToken accessToken = new AccessToken();
+        String getTokenUrl = "https://api.onlinefaxes.com/v2/oauth2/token";
+        String ACCESS_TOKEN = null;
+        try {
+			ACCESS_TOKEN = accessToken.GetAccessToken(getTokenUrl);
+			System.out.println("SERVER ACCESS_TOKEN: " + ACCESS_TOKEN);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+        if(ACCESS_TOKEN !=null){
+        	
+        	oauthHeader = ACCESS_TOKEN;
+        	URL url = null;
+    		HttpURLConnection conn;
+    		try {
+    			
+    			url = new URL( faxUrl );
+    			conn = (HttpURLConnection) url.openConnection();
+    			conn.setDoOutput( true );
+    			conn.setInstanceFollowRedirects( false );
+    			conn.setRequestMethod( "POST" );
+    			conn.setRequestProperty("Authorization", "ofx " + oauthHeader);
+    			conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+    			conn.setRequestProperty( "charset", "utf-8");
+    			conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+    			conn.setUseCaches( false );
+    			DataOutputStream wr = new DataOutputStream( conn.getOutputStream()); 
+    		
+    			wr.write( postData );
+    			wr.close();
+    			//Get Response  
+    			InputStream is = conn.getInputStream();
+    			System.out.println("Input Stream:" + is.toString());
+    			JsonReader rdr = Json.createReader(is);
+    			JsonObject obj = rdr.readObject();
+    			String response = obj.toString();
+    			System.out.println("Status:" + response);
+    		}catch (MalformedURLException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		} catch (ProtocolException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        } else {
+        	System.out.println("Error Getting Access Token");
+        }
 	}
 	
 	public void DownloadFax(){
 		
+		String oauthHeader;
 		String FAX_ID = "208121774837";
-		String urlParameters  = "faxId=" + FAX_ID;
+		String urlParameters  = FAX_ID;
 		byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
 		int    postDataLength = postData.length;
-		String baseUrl        = "https://api.onlinefaxxes.com/v2";
-		String faxUrl 		  = baseUrl + "/fax/async/downloadfaxfile?" + urlParameters;
-		URL url = null;
-		try {
-			url = new URL( faxUrl );
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		HttpURLConnection conn;
-		try {
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setDoOutput( true );
-			conn.setInstanceFollowRedirects( false );
-			conn.setRequestMethod( "GET" );
-			conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
-			conn.setRequestProperty( "charset", "utf-8");
-			conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-			conn.setUseCaches( false );
-			DataOutputStream wr = new DataOutputStream( conn.getOutputStream()); 
+		String baseUrl        = "https://api.onlinefaxes.com/v2";
+		String faxUrl 		  = baseUrl + "/fax/async/downloadfaxfile?faxId=" + urlParameters;
 		
-			wr.write( postData );
-			wr.close();
-			//Get Response  
-			InputStream is = conn.getInputStream();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		    StringBuilder response = new StringBuilder(); // or StringBuffer if not Java 5+ 
-		    String line;
-		    while((line = rd.readLine()) != null) {
-		      response.append(line);
-		      response.append('\r');
-		    }
-		    rd.close();
-		    System.out.println("Download Url:" + response);
-		  
-		}catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		AccessToken accessToken = new AccessToken();
+        String getTokenUrl = "https://api.onlinefaxes.com/v2/oauth2/token";
+        String ACCESS_TOKEN = null;
+        try {
+			ACCESS_TOKEN = accessToken.GetAccessToken(getTokenUrl);
+			System.out.println("SERVER ACCESS_TOKEN: " + ACCESS_TOKEN);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+        if(ACCESS_TOKEN !=null){
+        	
+        	oauthHeader = ACCESS_TOKEN;
+			URL url = null;
+			HttpURLConnection conn;
+			try {
+				url = new URL( faxUrl );
+				conn = (HttpURLConnection) url.openConnection();
+				conn.setDoOutput( true );
+				conn.setInstanceFollowRedirects( false );
+				conn.setRequestMethod( "GET" );
+				conn.setRequestProperty("Authorization", "ofx " + oauthHeader);
+				
+				//Get Response  
+				InputStream is = conn.getInputStream();
+				BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			    StringBuilder response = new StringBuilder(); // or StringBuffer if not Java 5+ 
+			    String line;
+			    while((line = rd.readLine()) != null) {
+			      response.append(line);
+			      response.append('\n');
+			    }
+			    rd.close();
+			    System.out.println("Download Url:" + response.toString());
+			  
+			}catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
 	}
 	
 	public void DeleteFax(){
 		
-		String FAX_ID = "208121513082";
-		String urlParameters  = "faxId=" + FAX_ID;
+		String FAX_ID = "208121774837";
+		String urlParameters  = FAX_ID;
 		byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
 		int    postDataLength = postData.length;
-		String baseUrl        = "https://api.onlinefaxxes.com/v2";
-		String faxUrl 		  = baseUrl + "/fax/async/deletefax?" + urlParameters;
+		String baseUrl        = "https://api.onlinefaxes.com/v2";
+		String faxUrl 		  = baseUrl + "/fax/async/deletefax?faxId=" + urlParameters;
+		
 		URL url = null;
-		try {
-			url = new URL( faxUrl );
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		HttpURLConnection conn;
 		try {
+			url = new URL( faxUrl );
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput( true );
 			conn.setInstanceFollowRedirects( false );
@@ -353,7 +391,7 @@ public class FaxOperations {
 		      response.append('\r');
 		    }
 		    rd.close();
-		    System.out.println("Delete Status:" + response);
+		    System.out.println("Delete Status:" + response.toString());
 		}catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
