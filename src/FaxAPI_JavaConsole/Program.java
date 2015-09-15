@@ -24,6 +24,20 @@ public class Program {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		System.out.println("Getting Fax Status using faxId of 208121774837 ...");
+		faxCompleModel.GetFaxStatus();
+		
+		System.out.println("Getting Fax Detail using faxId of 208121774837 ...");
+		faxCompleModel.GetFaxDetail();
+		
+		System.out.println("Get Download URL for faxId of 208121774837 ...");
+		faxCompleModel.DownloadFax();
+		
+		System.out.println("Delete Fax for faxId of 208121513082 ...");
+		faxCompleModel.DownloadFax();
+		
+		
 	}
 
 }
