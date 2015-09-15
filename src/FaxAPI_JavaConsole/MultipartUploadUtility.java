@@ -97,17 +97,16 @@ public class MultipartUploadUtility {
      * @param uploadFile a File to be uploaded
      * @throws IOException
      */
-    public void addFilePart(String fieldName, File uploadFile)
+    public void addFilePart(String fieldName, File uploadFile, String contentType)
             throws IOException {
         String fileName = uploadFile.getName();
         writer.append("--" + boundary).append(LINE_FEED);
-        writer.append(
-                "Content-Disposition: form-data; name=\"" + fieldName
-                        + "\"; filename=\"" + fileName + "\"")
+        writer.append("Content-Disposition: form-data; name=\"" 
+                		+ fieldName
+                        + "\"; filename=\"" 
+                		+ fileName + "\"")
                 .append(LINE_FEED);
-        writer.append(
-                "Content-Type: "
-                        + URLConnection.guessContentTypeFromName(fileName))
+        writer.append("Content-Type: " + contentType)
                 .append(LINE_FEED);
         writer.append("Content-Transfer-Encoding: binary").append(LINE_FEED);
         writer.append(LINE_FEED);

@@ -11,10 +11,7 @@ import com.google.gson.*;
 public class FaxOperations {
 	public void SendFaxSimpleModel() throws UnsupportedEncodingException{
 		String charset = "UTF-8";
-		
-        File uploadFile1 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//SampleFaxDoc.pdf");
-        File uploadFile2 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//TestFaxFromJapan.txt");
-        
+       
         AccessToken accessToken = new AccessToken();
         String getTokenUrl = "https://api.onlinefaxes.com/v2/oauth2/token";
         String ACCESS_TOKEN = null;
@@ -45,10 +42,15 @@ public class FaxOperations {
 			String FaxUrl = "https://api.onlinefaxes.com/v2/fax/async/sendfax/simplemodel?" + encodedQueryString;
 			System.out.println("SERVER FaxUrl: " + FaxUrl);
 			try {
+				File uploadFile1 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//SampleFaxDoc.pdf");
+				String uploadFileType1 = "application/pdf";
+		        File uploadFile2 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//TestFaxFromJapan.txt");
+		        String uploadFileType2 = "text/plain";
+		        
 				MultipartUploadUtility multipartUpload = new MultipartUploadUtility(FaxUrl, aouthRequestHeaderValue, charset);
 				
-				multipartUpload.addFilePart("fileUpload", uploadFile1);
-				multipartUpload.addFilePart("fileUpload", uploadFile2);
+				multipartUpload.addFilePart("fileUpload", uploadFile1, uploadFileType1);
+				multipartUpload.addFilePart("fileUpload", uploadFile2, uploadFileType2);
 				
 				System.out.println("SERVER File1: " + uploadFile1.getAbsolutePath());
 				System.out.println("SERVER File2: " + uploadFile2.getAbsolutePath());
@@ -72,10 +74,7 @@ public class FaxOperations {
 	
 	public void SendFaxComplexModel() throws UnsupportedEncodingException{
 		String charset = "UTF-8";
-		
-        File uploadFile1 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//SampleFaxDoc.docx");
-        File uploadFile2 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//TestFaxFromBulgaria.txt");
-        
+	
         AccessToken accessToken = new AccessToken();
         String getTokenUrl = "https://api.onlinefaxes.com/v2/oauth2/token";
         String ACCESS_TOKEN = null;
@@ -123,14 +122,19 @@ public class FaxOperations {
 			String FaxUrl = "https://api.onlinefaxes.com/v2/fax/async/sendfax/complexmodel";
 			System.out.println("SERVER FaxUrl: " + FaxUrl);
 			try {
+				File uploadFile1 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//SampleFaxDoc.docx");
+		        String uploadFileType1 = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+		        File uploadFile2 = new File("C://Users//Snow Attitudes//EclipseWorkspace//Fax-API-V2-Java-Desktop-Samples//src//resource//SampleFaxDocs//TestFaxFromBulgaria.txt");
+		        String uploadFileType2 = "text/plain";
+		        
 				MultipartUploadUtility multipartUpload = new MultipartUploadUtility(FaxUrl, aouthRequestHeaderValue, charset);
 				
 				multipartUpload.addJsonField("SenderDetail", jsonSenderDetail);
 				multipartUpload.addJsonField("RecipientList", jsonRecipientList);
 				
 				
-				multipartUpload.addFilePart("fileUpload", uploadFile1);
-				multipartUpload.addFilePart("fileUpload", uploadFile2);
+				multipartUpload.addFilePart("fileUpload", uploadFile1, uploadFileType1);
+				multipartUpload.addFilePart("fileUpload", uploadFile2, uploadFileType2);
 	            
 				System.out.println("SERVER File1: " + uploadFile1.getAbsolutePath());
 				System.out.println("SERVER File2: " + uploadFile2.getAbsolutePath());
