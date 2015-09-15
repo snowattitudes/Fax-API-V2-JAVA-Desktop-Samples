@@ -44,7 +44,7 @@ public class MultipartUploadUtility {
         this.charset = charset; //UTF-8
          
         // creates a unique boundary based on time stamp
-        boundary = "===" + System.currentTimeMillis() + "===";
+        boundary = "----WebKitFormBoundaryyoiBn1UznfKSqVe4";
          
         URL url = new URL(requestURL);
         httpConn = (HttpURLConnection) url.openConnection();
@@ -54,7 +54,7 @@ public class MultipartUploadUtility {
         httpConn.setRequestProperty("Authorization", "ofx " + this.oauthHeader);
         httpConn.setRequestProperty("Content-Type",
                 "multipart/form-data; boundary=" + boundary);
-        httpConn.setRequestProperty("User-Agent", "CodeJava Agent");
+        httpConn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36");
         
         outputStream = httpConn.getOutputStream();
         writer = new PrintWriter(new OutputStreamWriter(outputStream, this.charset),
@@ -72,6 +72,20 @@ public class MultipartUploadUtility {
                 .append(LINE_FEED);
         writer.append("Content-Type: text/plain; charset=" + charset).append(
                 LINE_FEED);
+        writer.append(LINE_FEED);
+        writer.append(value).append(LINE_FEED);
+        writer.flush();
+    }
+    
+    /**
+     * Adds a form field to the request
+     * @param name field name
+     * @param value field value
+     */
+    public void addJsonField(String name, String value) {
+        writer.append("--" + boundary).append(LINE_FEED);
+        writer.append("Content-Disposition: form-data; name=\"" + name + "\"")
+                .append(LINE_FEED);
         writer.append(LINE_FEED);
         writer.append(value).append(LINE_FEED);
         writer.flush();
