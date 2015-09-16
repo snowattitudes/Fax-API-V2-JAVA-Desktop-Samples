@@ -37,6 +37,9 @@ public class Program {
 		System.out.println("Delete Fax for faxId of 208121513082 ...");
 		faxCompleModel.DeleteFax();
 		
+		System.out.println("Get list of faxes under folder 1003 ...");
+		faxCompleModel.GetFaxList();
+		
 		
 	}
 

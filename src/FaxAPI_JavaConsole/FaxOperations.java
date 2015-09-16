@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.json.*;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 import com.google.gson.*;
@@ -330,7 +331,7 @@ public class FaxOperations {
 				conn = (HttpURLConnection) url.openConnection();
 				conn.setDoOutput( true );
 				conn.setInstanceFollowRedirects( false );
-				conn.setRequestMethod( "GET" );
+				conn.setRequestMethod( "POST" );
 				conn.setRequestProperty("Authorization", "ofx " + oauthHeader);
 				conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
 				conn.setRequestProperty( "charset", "utf-8");
@@ -423,6 +424,89 @@ public class FaxOperations {
 			}
         }
 	}
+
+	public void GetFaxList(){
+		
+		String oauthHeader;
+		String FOLDER_ID = "1003";
+		Boolean IS_DOWNLOADED = false;
+		String urlParameters  = "folderId=" + FOLDER_ID + "&isdownloaded=" + IS_DOWNLOADED;
+		byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
+		int    postDataLength = postData.length;
+		String baseUrl        = "https://api.onlinefaxes.com/v2";
+		String faxUrl 		  = baseUrl + "/fax/async/getfaxlist?" + urlParameters;
+		
+		AccessToken accessToken = new AccessToken();
+        String getTokenUrl = "https://api.onlinefaxes.com/v2/oauth2/token";
+        String ACCESS_TOKEN = null;
+        try {
+			ACCESS_TOKEN = accessToken.GetAccessToken(getTokenUrl);
+			System.out.println("SERVER ACCESS_TOKEN: " + ACCESS_TOKEN);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        if(ACCESS_TOKEN !=null){
+        	
+        	oauthHeader = ACCESS_TOKEN;
+        	URL url = null;
+    		HttpURLConnection conn;
+    		try {
+    			
+    			url = new URL( faxUrl );
+    			conn = (HttpURLConnection) url.openConnection();
+    			conn.setDoOutput( true );
+    			conn.setInstanceFollowRedirects( false );
+    			conn.setRequestMethod( "POST" );
+    			conn.setRequestProperty("Authorization", "ofx " + oauthHeader);
+    			conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+    			conn.setRequestProperty( "charset", "utf-8");
+    			conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+    			conn.setUseCaches( false );
+    			DataOutputStream wr = new DataOutputStream( conn.getOutputStream()); 
+    		
+    			wr.write( postData );
+    			wr.close();
+    			//Get Response  
+    			InputStream is = conn.getInputStream();
+    			System.out.println("Input Stream:" + is.toString());
+    			JsonReader rdr = Json.createReader(is);
+    			JsonArray results = rdr.readArray();
+    			
+    			for (JsonObject response : results.getValuesAs(JsonObject.class)){
+    				System.out.println(response.getInt("ItemCount"));
+    				System.out.println(response.getInt("RowNum" ));
+    				System.out.println(response.getString("UserMsgId" ));
+    				System.out.println(response.getInt("MsgNo" ));
+    				System.out.println(response.getInt("FolderId" ));
+    				System.out.println(response.getString("CreatedDate" ));
+    				System.out.println(response.getString("SenderName" ));
+    				System.out.println(response.getBoolean("IsRead" ));
+    				System.out.println(response.getString("Subject" ));
+    				System.out.println(response.getString("FullPath" ));
+    				System.out.println(response.getString("RecpName" ));
+    				System.out.println(response.getString("RecpAddress" ));
+    				System.out.println(response.getString("MsgStatus" ));
+    				System.out.println("-----------");
+    			}
+    		}catch (MalformedURLException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		} catch (ProtocolException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        } else {
+        	System.out.println("Error Getting Access Token");
+        }
+		
+		
+	}
+	
 }
 		
 		
