@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
    <properties> 
-	   	<entry key="ppName">YOUR_APP_NAME</entry>
-	   	<entry key="appId">YOUR_APP_ID</entry>
-   		<entry key="client_id">CLIENT_ID</entry>
-        <entry key="client_secret">CLIENT_SECRET</entry>
+	   	<entry key="ppName">APP_NAME</entry>
+	   	<entry key="appId">APP_ID</entry>
+   		<entry key="client_id">APP_CLIENT_ID</entry>
+        <entry key="client_secret">APP_CLIENT_SECRET</entry>
    </properties>
 

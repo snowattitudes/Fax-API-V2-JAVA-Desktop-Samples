@@ -8,6 +8,7 @@ public class Program {
 		FaxOperations faxSimpleModel = new FaxOperations();
 		FaxOperations faxCompleModel = new FaxOperations();
 
+		
 		System.out.println("Sending Fax Simple Model ...");
 		try {
 			faxSimpleModel.SendFaxSimpleModel();
@@ -34,10 +35,10 @@ public class Program {
 		System.out.println("Get Download URL for faxId of 208121774837 ...");
 		faxCompleModel.DownloadFax();
 		
-		System.out.println("Delete Fax for faxId of 208121513082 ...");
+		System.out.println("Delete Fax for faxId of 208121761779 ...");
 		faxCompleModel.DeleteFax();
 		
-		System.out.println("Get list of faxes under folder 1003 ...");
+		System.out.println("Get list of faxes under folder 1007 ...");
 		faxCompleModel.GetFaxList();
 		
 		
