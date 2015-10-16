@@ -1,9 +1,12 @@
 package FaxAPI_JavaConsole;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -406,8 +409,10 @@ public class FaxOperations {
     			conn.setDoOutput( true );
     			conn.setInstanceFollowRedirects( false );
     			conn.setRequestMethod( "POST" );
+    			conn.setRequestProperty( "Accept", "*/*"); 
     			conn.setRequestProperty("Authorization", "ofx " + oauthHeader);
     			conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+    			
     			conn.setRequestProperty( "charset", "utf-8");
     			conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
     			conn.setUseCaches( false );
@@ -435,6 +440,7 @@ public class FaxOperations {
         } else {
         	System.out.println("Error Getting Access Token");
         }
+		
 	}
 	
 	public void GetFaxList(){

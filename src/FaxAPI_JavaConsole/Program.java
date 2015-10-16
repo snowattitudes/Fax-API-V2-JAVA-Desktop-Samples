@@ -1,7 +1,7 @@
 package FaxAPI_JavaConsole;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+
 public class Program {
 
 	public static void main(String[] args) {
@@ -36,10 +36,10 @@ public class Program {
 		faxCompleModel.DownloadFax();
 		
 		System.out.println("Delete Fax for faxId of 208121761779 ...");
-		faxCompleModel.DeleteFax();
+		faxSimpleModel.DeleteFax();
 		
 		System.out.println("Get list of faxes under folder 1007 ...");
-		faxCompleModel.GetFaxList();
+		//faxCompleModel.GetFaxList();
 		
 		
 	}
