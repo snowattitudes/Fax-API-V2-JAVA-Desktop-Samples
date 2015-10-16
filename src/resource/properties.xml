@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
    <properties> 
-	   	<entry key="ppName">Yan 1st. Apps</entry>
-	   	<entry key="appId">872bf929bca5464fa54227cbd325d6c3</entry>
-   		<entry key="client_id">b1af73139fb94d5bb84b20f5dffba100</entry>
-        <entry key="client_secret">yXxSk_0DRnkU9EAPnxAVsyxxIeC0tPak4L9ukx6xSCE</entry>
+	   	<entry key="ppName">7thFaxApplication</entry>
+	   	<entry key="appId">6e867232bc6d4c26aca2707b75511657</entry>
+   		<entry key="client_id">e78946f28da14e3d97d3e1bb31fbcf19</entry>
+        <entry key="client_secret">dtaNkE5r-FDt7A_rARvqEBHDEa6HZhWMGNhGvGc2pnQ</entry>
    </properties>
 
